@@ -1,0 +1,58 @@
+.mentee-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.mentee-avatar-sm {
+    width: 56px;
+    height: 56px;
+    background: #f1f5f9;
+    color: var(--primary);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.mentee-content {
+    flex: 1;
+}
+
+.mentee-content h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+}
+
+.mentee-content p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-bg {
+    height: 6px;
+    background-color: #f1f5f9;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    transition: width 0.5s ease-out;
+}

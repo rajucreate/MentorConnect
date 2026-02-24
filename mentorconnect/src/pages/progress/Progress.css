@@ -1,0 +1,160 @@
+.progress-overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.progress-main-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.progress-header-row {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.progress-stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progress-stat h3 {
+    font-size: 1.75rem;
+}
+
+.progress-stat span {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.progress-track {
+    margin-bottom: 3rem;
+}
+
+.milestones-list h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.milestone-item {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background-color: #f8fafc;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.milestone-item.clickable {
+    cursor: pointer;
+}
+
+.milestone-item.clickable:hover {
+    border-color: var(--primary);
+    background-color: white;
+}
+
+.milestone-item.completed {
+    background-color: #f0fdf4;
+}
+
+.status-icon {
+    color: #cbd5e1;
+}
+
+.status-icon.completed {
+    color: var(--accent);
+}
+
+.milestone-text h4 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.milestone-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.progress-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.notes-section,
+.next-goals-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.notes-section h3,
+.next-goals-card h3 {
+    font-size: 1.125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.note-card {
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 0.75rem;
+    border-left: 4px solid var(--secondary);
+}
+
+.note-card p {
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.note-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.next-goals-card ul {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.next-goals-card li {
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.875rem;
+}
+
+.next-goals-card li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+    .progress-overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
