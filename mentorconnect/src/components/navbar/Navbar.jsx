@@ -56,7 +56,7 @@ const Navbar = () => {
                         </li>
                     ) : (
                         <li>
-                            <Link to="/login" className="btn btn-primary">Login</Link>
+                            <Link to="/login" className="btn btn-primary" style={{color:"#ffffff"}}>Login</Link>
                         </li>
                     )}
                 </ul>
@@ -85,7 +85,7 @@ const Navbar = () => {
                             </button>
                         </>
                     ) : (
-                        <Link to="/login" className="btn btn-primary" onClick={() => setIsOpen(false)}>
+                        <Link to="/login" className="btn btn-primary" style={{color:"#ffffff"}} onClick={() => setIsOpen(false)}>
                             Login
                         </Link>
                     )}
