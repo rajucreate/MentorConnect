@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, User, LogOut, LayoutDashboard, Calendar, Users, BarChart } from 'lucide-react';
-import { getCurrentUser } from '../../utils/storage';
+import { useAuth } from '../../context/AuthContext';
 import { logout } from '../../utils/auth';
 import './Navbar.css';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const user = getCurrentUser();
+    const { isAuthenticated, role } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -18,15 +18,15 @@ const Navbar = () => {
 
     const navLinks = [
         { name: 'Home', path: '/', roles: ['public'] },
-        { name: 'Dashboard', path: '/dashboard', roles: ['admin', 'mentor', 'mentee'] },
-        { name: 'Sessions', path: '/sessions', roles: ['admin', 'mentor', 'mentee'] },
-        { name: 'Matching', path: '/matching', roles: ['admin'] },
-        { name: 'Progress', path: '/progress', roles: ['admin', 'mentor', 'mentee'] },
+        { name: 'Dashboard', path: '/dashboard', roles: ['ADMIN', 'MENTOR', 'MENTEE'] },
+        { name: 'Sessions', path: '/sessions', roles: ['ADMIN', 'MENTOR', 'MENTEE'] },
+        { name: 'Matching', path: '/matching', roles: ['ADMIN'] },
+        { name: 'Progress', path: '/progress', roles: ['ADMIN', 'MENTOR', 'MENTEE'] },
     ];
 
     const filteredLinks = navLinks.filter(link => {
-        if (link.roles.includes('public') && !user) return true;
-        if (user && link.roles.includes(user.role)) return true;
+        if (link.roles.includes('public') && !isAuthenticated) return true;
+        if (isAuthenticated && link.roles.includes(role)) return true;
         return false;
     });
 
@@ -44,11 +44,11 @@ const Navbar = () => {
                             <Link to={link.path}>{link.name}</Link>
                         </li>
                     ))}
-                    {user ? (
+                    {isAuthenticated ? (
                         <li className="user-menu">
                             <Link to="/profile" className="profile-link">
                                 <User size={20} />
-                                <span>{user.name}</span>
+                                <span>{role}</span>
                             </Link>
                             <button onClick={handleLogout} className="logout-btn">
                                 <LogOut size={20} />
@@ -77,7 +77,7 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    {user ? (
+                    {isAuthenticated ? (
                         <>
                             <Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link>
                             <button onClick={handleLogout} className="mobile-logout">

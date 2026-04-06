@@ -9,7 +9,7 @@ const Register = () => {
         name: '',
         email: '',
         password: '',
-        role: 'mentee'
+        role: 'MENTEE'
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -20,13 +20,13 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
         try {
-            register(formData);
+            await register(formData);
             navigate('/login');
         } catch (err) {
             setError(err.message);
@@ -36,9 +36,9 @@ const Register = () => {
     };
 
     const roles = [
-        { id: 'mentee', name: 'Mentee', icon: <GraduationCap size={24} />, desc: 'Learn and grow' },
-        { id: 'mentor', name: 'Mentor', icon: <Briefcase size={24} />, desc: 'Share your expertise' },
-        { id: 'admin', name: 'Admin', icon: <Shield size={24} />, desc: 'Manage the platform' }
+        { id: 'MENTEE', name: 'Mentee', icon: <GraduationCap size={24} />, desc: 'Learn and grow' },
+        { id: 'MENTOR', name: 'Mentor', icon: <Briefcase size={24} />, desc: 'Share your expertise' },
+        { id: 'ADMIN', name: 'Admin', icon: <Shield size={24} />, desc: 'Manage the platform' }
     ];
 
     return (

@@ -47,11 +47,7 @@
 /* Form Styles */
 .auth-form-container {
   max-width: 450px;
-  margin: 4rem auto;
   padding: 2.5rem;
-  background: var(--white);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-lg);
 }
 
 .form-group {

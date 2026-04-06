@@ -1,52 +1,53 @@
 /**
- * auth.js - Authentication logic for MentorConnect
+ * auth.js - Authentication logic for MentorConnect (JWT-based)
  */
-import { getUsers, saveUsers, setCurrentUser, getCurrentUser } from './storage';
+import { jwtDecode } from 'jwt-decode';
+import { loginAPI, registerAPI } from '../services/api';
 
-export const register = (userData) => {
-    const users = getUsers();
-    const exists = users.find(u => u.email === userData.email);
-
-    if (exists) {
-        throw new Error('User already exists');
+export const register = async (userData) => {
+    try {
+        const response = await registerAPI(userData.name, userData.email, userData.password, userData.role);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Registration failed');
     }
-
-    const newUser = {
-        ...userData,
-        id: Date.now().toString(),
-        createdAt: new Date().toISOString()
-    };
-
-    users.push(newUser);
-    saveUsers(users);
-    return newUser;
 };
 
-export const login = (email, password) => {
-    const users = getUsers();
-    const user = users.find(u => u.email === email && u.password === password);
+export const login = async (email, password) => {
+    try {
+        const response = await loginAPI(email, password);
+        const { token } = response.data;
 
-    if (!user) {
-        throw new Error('Invalid email or password');
+        // Decode JWT to extract role and email
+        const decoded = jwtDecode(token);
+
+        // Store token and role
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userRole', decoded.role);
+
+        return {
+            token,
+            role: decoded.role,
+            email: decoded.email,
+        };
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Invalid email or password');
     }
-
-    // Don't store password in session
-    const sessionUser = { ...user };
-    delete sessionUser.password;
-
-    setCurrentUser(sessionUser);
-    return sessionUser;
 };
 
 export const logout = () => {
-    setCurrentUser(null);
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userRole');
 };
 
 export const isAuthenticated = () => {
-    return !!getCurrentUser();
+    return !!localStorage.getItem('authToken');
 };
 
 export const getRole = () => {
-    const user = getCurrentUser();
-    return user ? user.role : null;
+    return localStorage.getItem('userRole');
+};
+
+export const getToken = () => {
+    return localStorage.getItem('authToken');
 };

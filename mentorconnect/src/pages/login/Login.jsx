@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { login } from '../../utils/auth';
+import { useAuth } from '../../context/AuthContext';
 import { LogIn, Mail, Lock, AlertCircle } from 'lucide-react';
 import './Login.css';
 
@@ -12,16 +13,26 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/dashboard';
+    const { login: authLogin } = useAuth();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
         try {
-            login(email, password);
-            navigate(from, { replace: true });
+            const response = await login(email, password);
+            authLogin(response.token, response.role);
+
+            // Redirect based on role
+            const roleRoutes = {
+                MENTEE: '/mentee-dashboard',
+                MENTOR: '/mentor-dashboard',
+                ADMIN: '/admin-dashboard',
+            };
+
+            const redirectPath = roleRoutes[response.role] || '/dashboard';
+            navigate(redirectPath, { replace: true });
         } catch (err) {
             setError(err.message);
         } finally {

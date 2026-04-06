@@ -1,16 +1,20 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { getCurrentUser } from '../../utils/storage';
+import { useAuth } from '../../context/AuthContext';
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
-    const user = getCurrentUser();
+    const { isAuthenticated, role, loading } = useAuth();
     const location = useLocation();
 
-    if (!user) {
+    if (loading) {
+        return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    }
+
+    if (!isAuthenticated) {
         // Redirect to login but save the current location they were trying to go to
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+    if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
         // Role not authorized, redirect to dashboard or landing
         return <Navigate to="/dashboard" replace />;
     }
